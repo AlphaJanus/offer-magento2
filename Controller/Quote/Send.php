@@ -1,0 +1,239 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hosein
+ * Date: 2019-01-18
+ * Time: 11:04
+ */
+
+namespace Netzexpert\Offer\Controller\Quote;
+
+use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\ProductRepository;
+use Magento\Checkout\Model\Cart;
+use \Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Framework\App\Action\Context;
+use Magento\Quote\Model\Quote;
+use Magento\Quote\Model\Quote\Item;
+use Magento\Quote\Model\QuoteRepository;
+use Netzexpert\Offer\Model\OfferFactory;
+use Netzexpert\Offer\Model\OfferItemFactory;
+use Netzexpert\Offer\Model\OfferRepository;
+use Netzexpert\Offer\Model\OfferItemRepository;
+
+class Send extends \Magento\Framework\App\Action\Action
+{
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
+    private $request;
+
+    /** @var CheckoutSession  */
+    private $checkoutSession;
+
+    /**
+     * @var \Magento\Framework\Mail\Template\TransportBuilder
+     */
+    private $transportBuilder;
+
+    /**
+     * @var \Netzexpert\Offer\Model\OfferRepository $offerRepository
+     */
+    private $offerRepository;
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
+     * @var OfferFactory
+     */
+    private $offerFactory;
+
+    /**
+     * @var OfferItemFactory
+     */
+    private $offerItemFactory;
+
+    /**
+     * @var \Magento\Framework\Stdlib\DateTime\DateTime
+     */
+    private $date;
+
+    /**
+     * @var \Netzexpert\Offer\Model\OfferItemRepository OfferItemRepository
+     */
+    private $offerItemRepository;
+
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
+    private $customerSession;
+
+    /**
+     * @var \Magento\Framework\Controller\Result\RedirectFactory
+     */
+    protected $resultRedirectFactory;
+
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    /**
+     * @var \Magento\Framework\Message\Manager
+     */
+    private $message;
+
+    /**
+     * Send constructor.
+     * @param Context $context
+     * @param \Magento\Framework\App\Request\Http $request
+     * @param CheckoutSession $session
+     * @param \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param OfferRepository $offerRepository
+     * @param OfferFactory $offerFactory
+     * @param OfferItemFactory $offerItemFactory
+     * @param \Magento\Framework\Stdlib\DateTime\DateTime $date
+     * @param OfferItemRepository $offerItemRepository
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param Cart $cart
+     * @param \Magento\Framework\Controller\Result\RedirectFactory $redirectFactory
+     * @param \Magento\Quote\Model\QuoteFactory $quote
+     * @param ProductRepository $productRepository
+     * @param \Magento\Framework\Message\Manager $message
+     */
+    public function __construct(
+        Context $context,
+        \Magento\Framework\App\Request\Http $request,
+        CheckoutSession $session,
+        \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        OfferRepository $offerRepository,
+        OfferFactory $offerFactory,
+        OfferItemFactory $offerItemFactory,
+        \Magento\Framework\Stdlib\DateTime\DateTime $date,
+        OfferItemRepository $offerItemRepository,
+        \Magento\Customer\Model\Session $customerSession,
+        \Magento\Checkout\Model\Cart $cart,
+        \Magento\Framework\Controller\Result\RedirectFactory $redirectFactory,
+        \Magento\Quote\Model\QuoteFactory $quote,
+        ProductRepository $productRepository,
+        \Magento\Framework\Message\Manager $message
+    ) {
+        $this->request = $request;
+        $this->checkoutSession  = $session;
+        $this->transportBuilder = $transportBuilder;
+        $this->storeManager = $storeManager;
+        $this->offerRepository = $offerRepository;
+        $this->offerFactory = $offerFactory;
+        $this->offerItemFactory = $offerItemFactory;
+        $this->date = $date;
+        $this->offerItemRepository = $offerItemRepository;
+        $this->customerSession = $customerSession;
+        $this->cart = $cart;
+        $this->redirectFactory = $redirectFactory;
+        $this->quote = $quote;
+        $this->productRepository = $productRepository;
+        $this->message = $message;
+        parent::__construct($context);
+    }
+
+    /**
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
+     * @throws \Magento\Framework\Exception\MailException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function execute()
+    {
+        $data = $this->request->getParams();
+        $store = $this->storeManager->getStore()->getId();
+        $quote = $this->checkoutSession->getQuote();
+        $link = $this->_url->getUrl('offer/quote/duplicate', ['id' => $quote->getId()]);
+        $feedback = $this->_url->getUrl('contact/index/index');
+        $transport = $this->transportBuilder->setTemplateIdentifier($data['template'])
+            ->setTemplateOptions(['area' => 'frontend', 'store' => $store])
+            ->setTemplateVars(
+                [
+                    'store'        => $this->storeManager->getStore(),
+                    'quote'        => $quote,
+                    'link'         => $link,
+                    'feedback'     => $feedback,
+                    'name'         => $data['name']
+                ]
+            )
+            ->setFrom('general')
+            ->addTo($data['email'])
+            ->getTransport();
+        $this->saveQuote($quote);
+        $this->redirectQuote();
+        $transport->sendMessage();
+    }
+
+    /**
+     * @param $quote
+     * @return bool|\Netzexpert\Offer\Model\Offer|null
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws \Magento\Framework\Exception\TemporaryState\CouldNotSaveException
+     */
+    private function saveQuote($quote) {
+        $quote = $this->checkoutSession->getQuote();
+        $id = $quote['entity_id'];
+        $dataEmail = $this->request->getParams();
+        $offerQuote = $this->offerRepository->get($id);
+        if (!$offerQuote) {
+            $offerQuote = $this->offerFactory->create();
+        }
+        $offerQuote->setQuoteId($quote->getId())->setDate($this->date->gmtDate())->setEmail($dataEmail['email'])
+            ->setCustomerId($this->customerSession->getCustomer()->getId());
+        $this->offerRepository->save($offerQuote);
+        /** @var Item $item */
+        foreach ($quote->getAllItems() as $item) {
+            $offerItem = $this->offerItemFactory->create();
+            $offerItem->setOfferId($offerQuote->getId())->setQuoteItemId($item->getItemId());
+            $this->offerItemRepository->save($offerItem);
+        }
+        return $offerQuote;
+    }
+
+    /**
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    private function redirectQuote()
+    {
+        $currentQuote = $this->checkoutSession->getQuote();
+        $quoteItem = $currentQuote->getItems();
+        /** @var \Magento\Quote\Api\Data\CartItemInterface $item */
+        foreach ($quoteItem as $item) {
+            $itemSku = $item->getSku();
+        }
+        $this->checkoutSession->setQuoteId(null);
+        $customer = $currentQuote->getCustomer();
+        $store = $this->storeManager->getStore();
+        $newQuote = $this->quote->create();
+        $newQuote->setData($currentQuote->getData());
+        $newQuote->setId(null);
+        $newQuote->assignCustomer($customer);
+        $newQuote->setStore($store);
+        $newQuote->setCurrency();
+        try {
+            $product = $this->productRepository->get($itemSku);
+        } catch (\Exception $exception) {
+                $this->messageManager->addError($exception->getMessage());
+        }
+        try {
+            $newQuote->addProduct($product);
+        } catch (\Exception $exception) {
+                $this->messageManager->addError($exception->getMessage());
+        }
+        $newQuote->setItems($currentQuote->getItems());
+        $newQuote->setIsActive(true);
+        try {
+            $newQuote->save();
+        } catch (\Exception $exception) {
+                $this->messageManager->addError($exception->getMessage());
+        }
+        $this->checkoutSession->replaceQuote($newQuote);
+    }
+}

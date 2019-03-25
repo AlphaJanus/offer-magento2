@@ -1,0 +1,47 @@
+<?php
+/** @var $block \Netzexpert\Offer\Block\Checkout\Cart\FormSendMyAccount */
+?>
+<form id="send-quote-form" class="form_email" method="post">
+    <input type="hidden" name="offer_id" value="<?= $block->getOfferId(); ?>" />
+    <input name="email" placeholder="enter email address" title="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>"
+           class="input-text" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
+    <input name="name" placeholder="enter name and surname" title="<?php /* @escapeNotVerified */ echo __('Name') ?>"
+           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>"
+           class="input-text" type="text" data-validate="{required:true}"/>
+    <select name="template" class="form_template" type="text">
+        <?php
+        foreach ($block->getAvailableTemplates() as $template) {
+            ?>
+            <option value="<?= $block->escapeHtml($template['value']) ?>"><?= $block->escapeHtml($template['label']) ?></option>
+            <?php
+        }
+        ?>
+    </select>
+    <button id="send-quote" type="submit" title="<?= /* @escapeNotVerified */ __('Send Cart') ?>" class="action_update">
+        <span><?= /* @escapeNotVerified */ __('Send Cart') ?></span>
+    </button>
+</form>
+
+
+<script>
+    require(['jquery'],function() {
+        jQuery(document).ready(function () {
+            jQuery("#send-quote-form").submit(function () {
+                var data = jQuery(this).serialize();
+                jQuery.ajax({
+                    url: '<?= $block->getFormUrl() ?>',
+                    type: "POST",
+                    data: data,
+                    showLoader: true,
+                    context: jQuery('body'),
+                    cache: false,
+                    success: function(response){
+                        console.log(response.output);
+                    }
+                });
+                return false;
+            });
+        });
+    });
+</script>

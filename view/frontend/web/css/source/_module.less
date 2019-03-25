@@ -1,0 +1,16 @@
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .offer-offer-view {
+    .cart-container {
+      #form-validate {
+        width: 100%;
+        &:extend(.abs-shopping-cart-items-desktop all);
+        margin-bottom: @indent__base;
+
+        .gift-options,
+        .gift-summary {
+          padding-bottom: @indent__base;
+        }
+      }
+    }
+  }
+}

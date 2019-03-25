@@ -1,0 +1,18 @@
+.form_email {
+    width: 73%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3%;
+}
+
+.form_template {
+    margin-left: 1%;
+}
+.action_update {
+    margin-left: 1%;
+    white-space: nowrap;
+}
+.input-text {
+    margin-left: 1%;
+}
+
