@@ -78,6 +78,6 @@ class ConfigurePlugin
                 } catch (\Exception $exception) {
                     $this->logger->alert($exception->getMessage());
                 }
-            }
+        }
     }
 }

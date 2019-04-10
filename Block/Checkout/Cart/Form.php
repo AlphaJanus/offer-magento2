@@ -29,6 +29,11 @@ class Form extends \Magento\Framework\View\Element\Template
     private $groupRepository;
 
     /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $_scopeConfig;
+
+    /**
      * Form constructor.
      * @param \Magento\Customer\Model\Session $session
      * @param Template\Context $context
@@ -37,49 +42,82 @@ class Form extends \Magento\Framework\View\Element\Template
      * @param array $data
      */
     public function __construct(
-        \Magento\Customer\Model\Session $session,
+        \Magento\Customer\Model\Session $customerSession,
         Template\Context $context,
         Config $config,
         \Magento\Customer\Api\GroupRepositoryInterface $groupRepository,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = [])
     {
-        $this->customerSession = $session;
+        $this->customerSession = $customerSession;
         $this->groupRepository = $groupRepository;
+        $this->_scopeConfig = $scopeConfig;
         parent::__construct($context, $data);
         $this->emailConfig = $config;
     }
 
-    public function getAvailableTemplates() {
+    public function getAvailableTemplates()
+    {
+        $templates = $this->emailConfig->getAvailableTemplates();
+        $module = 'Netzexpert_Offer';
+            return array_filter($templates, function ($var) use ($module) {
+                return ($var['group'] == $module);
+            });
+    }
+
+    public function getTemplateNonRegisteredUser()
+    {
         $templates = $this->emailConfig->getAvailableTemplates();
         $module = 'Netzexpert_Offer';
         return array_filter($templates, function ($var) use ($module) {
-            return ($var['group'] == $module);
+            return ($var['label'] == 'Email Cart Template');
         });
     }
 
-    /**
-     * @return string
-     */
     public function getFormUrl()
     {
         return $this->getUrl('offer/quote/send');
     }
 
+    public function getStoreEmail()
+    {
+        return $this->_scopeConfig->getValue(
+            'trans_email/ident_sales/email',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
+
     /**
-     * @return string
+     * @return bool
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function _toHtml()
+    public function checkCustomer()
     {
-        $inGroup = null;
-        if ($this->customerSession->isLoggedIn()) {
-            $customer = $this->customerSession->getCustomer()->getGroupId();
-            $inGroup = $this->groupRepository->getById($customer)->getCode();
+        $customer = $this->customerSession->getCustomer()->getGroupId();
+        $inGroup = $this->groupRepository->getById($customer)->getCode();
+
+        if ($inGroup == 'Mitarbeiter') {
+            return true;
         }
-        if ($inGroup !== 'Mitarbeiter') {
-            return '';
-        }
-        return parent::_toHtml();
+        return false;
     }
+
+//    /**
+//     * @return string
+//     * @throws \Magento\Framework\Exception\LocalizedException
+//     * @throws \Magento\Framework\Exception\NoSuchEntityException
+//     */
+//    protected function _toHtml()
+//    {
+//        $inGroup = null;
+//        if ($this->customerSession->isLoggedIn()) {
+//            $customer = $this->customerSession->getCustomer()->getGroupId();
+//            $inGroup = $this->groupRepository->getById($customer)->getCode();
+//        }
+//        if ($inGroup !== 'Mitarbeiter') {
+//            return '';
+//        }
+//        return parent::_toHtml();
+//    }
 }

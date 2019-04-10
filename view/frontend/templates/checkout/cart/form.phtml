@@ -3,20 +3,27 @@
 ?>
 <form id="send-quote-form" class="form_email" method="post">
     <input name="email" placeholder="enter email address" title="<?php /* @escapeNotVerified */ echo __('Email') ?>"
-           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>"
+           value="<?php echo $block->escapeHtml($block->getStoreEmail()) ?>"
            class="input-text" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
     <input name="name" placeholder="enter name and surname" title="<?php /* @escapeNotVerified */ echo __('Name') ?>"
            value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>"
            class="input-text" type="text" data-validate="{required:true}"/>
-    <select name="template" class="form_template" type="text">
+    <?php if ($block->checkCustomer() == true):?>
+    <select name="template" class="form_template_request" type="text">
         <?php
-        foreach ($block->getAvailableTemplates() as $template) {
-            ?>
+        foreach ($block->getAvailableTemplates() as $template) :?>
             <option value="<?= $block->escapeHtml($template['value']) ?>"><?= $block->escapeHtml($template['label']) ?></option>
-            <?php
-        }
-        ?>
+        <?php endforeach; ?>
     </select>
+    <?php elseif ($block->checkCustomer() == false):?>
+    <script>
+        require(['jquery'],function() {
+            jQuery(".form_template_request").hide();
+        }
+    </script>
+    <?php $templateValue = $block->getTemplateNonRegisteredUser()?>
+            <input name="template" type="hidden" value="<?= $block->escapeHtml(array_pop($templateValue)['value'])?>"/>
+    <?php endif; ?>
     <button id="send-quote" type="submit" title="<?= /* @escapeNotVerified */ __('Send Cart') ?>" class="action_update">
         <span><?= /* @escapeNotVerified */ __('Send Cart') ?></span>
     </button>

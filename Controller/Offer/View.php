@@ -9,7 +9,6 @@
 namespace Netzexpert\Offer\Controller\Offer;
 
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\View\Result\PageFactory;
 
