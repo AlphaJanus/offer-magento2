@@ -13,6 +13,8 @@ use Magento\Catalog\Model\ProductRepository;
 use Magento\Checkout\Model\Cart;
 use \Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Quote\Item;
 use Magento\Quote\Model\QuoteRepository;
@@ -79,6 +81,9 @@ class Send extends \Magento\Framework\App\Action\Action
      * @var ProductRepository
      */
     private $productRepository;
+
+    /** @var \Magento\Quote\Model\QuoteFactory  */
+    private $quote;
 
     /**
      * @var \Magento\Framework\Message\Manager
@@ -202,38 +207,58 @@ class Send extends \Magento\Framework\App\Action\Action
      */
     private function redirectQuote()
     {
-        $currentQuote = $this->checkoutSession->getQuote();
-        $quoteItem = $currentQuote->getItems();
-        /** @var \Magento\Quote\Api\Data\CartItemInterface $item */
-        foreach ($quoteItem as $item) {
-            $itemSku = $item->getSku();
+        if ($this->customerSession->isLoggedIn() == false) {
+            $currentQuote = $this->checkoutSession->getQuote();
+            $this->checkoutSession->setQuoteId(null);
+            $customer = $currentQuote->getCustomer();
+            $store = $this->storeManager->getStore();
+            $quoteItems = $currentQuote->getItems();
+            if (empty($quoteItems)) {
+                return;
+            }
+            $newQuote = $this->quote->create();
+            $newQuote->setData($currentQuote->getData());
+            $newQuote->setId(null);
+            $newQuote->assignCustomer($customer);
+            $newQuote->setStore($store);
+            $newQuote->setCurrency();
+            $newQuote->setIsActive(true);
+            try {
+                $newQuote->save();
+            } catch (\Exception $exception) {
+                $this->messageManager->addErrorMessage($exception->getMessage());
+            }
+
+            /** @var \Magento\Quote\Api\Data\CartItemInterface | Item $item */
+            foreach ($quoteItems as $item) {
+                $itemSku = $item->getSku();
+                try {
+                    $product = $this->productRepository->get($itemSku);
+                    $request = $item->getBuyRequest();
+                    $newItem = $newQuote->addProduct($product, $request);
+
+                    if (empty($newItem->getPrice())) {
+                        $newItem->setPrice($product->getFinalPrice());
+                        $customPrice = $request->getData('custom_price');
+                        if (!empty($customPrice)) {
+                            $newItem->setCustomPrice($customPrice);
+                            $newItem->setOriginalCustomPrice($customPrice);
+                        }
+                    }
+                    $newItem->calcRowTotal()->save();
+                } catch (NoSuchEntityException $exception) {
+                    $this->messageManager->addErrorMessage($exception->getMessage());
+                } catch (LocalizedException $exception) {
+                    $this->messageManager->addErrorMessage($exception->getMessage());
+                }
+            }
+            try {
+                $newQuote->save();
+            } catch (\Exception $exception) {
+                $this->messageManager->addErrorMessage($exception->getMessage());
+            }
+            $newQuote->collectTotals();
+            $this->checkoutSession->replaceQuote($newQuote);
         }
-        $this->checkoutSession->setQuoteId(null);
-        $customer = $currentQuote->getCustomer();
-        $store = $this->storeManager->getStore();
-        $newQuote = $this->quote->create();
-        $newQuote->setData($currentQuote->getData());
-        $newQuote->setId(null);
-        $newQuote->assignCustomer($customer);
-        $newQuote->setStore($store);
-        $newQuote->setCurrency();
-        try {
-            $product = $this->productRepository->get($itemSku);
-        } catch (\Exception $exception) {
-                $this->messageManager->addError($exception->getMessage());
-        }
-        try {
-            $newQuote->addProduct($product);
-        } catch (\Exception $exception) {
-                $this->messageManager->addError($exception->getMessage());
-        }
-        $newQuote->setItems($currentQuote->getItems());
-        $newQuote->setIsActive(true);
-        try {
-            $newQuote->save();
-        } catch (\Exception $exception) {
-                $this->messageManager->addError($exception->getMessage());
-        }
-        $this->checkoutSession->replaceQuote($newQuote);
     }
 }
