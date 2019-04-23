@@ -222,6 +222,8 @@ class Send extends \Magento\Framework\App\Action\Action
             $newQuote->assignCustomer($customer);
             $newQuote->setStore($store);
             $newQuote->setCurrency();
+            $newQuote->getBillingAddress();
+            $newQuote->getShippingAddress()->setCollectShippingRates(true);
             $newQuote->setIsActive(true);
             try {
                 $newQuote->save();
@@ -232,19 +234,14 @@ class Send extends \Magento\Framework\App\Action\Action
             /** @var \Magento\Quote\Api\Data\CartItemInterface | Item $item */
             foreach ($quoteItems as $item) {
                 $itemSku = $item->getSku();
+                $data = $item->getData();
+                unset($data['item_id']);
+                unset($data['quote_id']);
                 try {
                     $product = $this->productRepository->get($itemSku);
                     $request = $item->getBuyRequest();
                     $newItem = $newQuote->addProduct($product, $request);
-
-                    if (empty($newItem->getPrice())) {
-                        $newItem->setPrice($product->getFinalPrice());
-                        $customPrice = $request->getData('custom_price');
-                        if (!empty($customPrice)) {
-                            $newItem->setCustomPrice($customPrice);
-                            $newItem->setOriginalCustomPrice($customPrice);
-                        }
-                    }
+                    $newItem->setData($data);
                     $newItem->calcRowTotal()->save();
                 } catch (NoSuchEntityException $exception) {
                     $this->messageManager->addErrorMessage($exception->getMessage());
@@ -252,12 +249,12 @@ class Send extends \Magento\Framework\App\Action\Action
                     $this->messageManager->addErrorMessage($exception->getMessage());
                 }
             }
+            $newQuote->collectTotals();
             try {
                 $newQuote->save();
             } catch (\Exception $exception) {
                 $this->messageManager->addErrorMessage($exception->getMessage());
             }
-            $newQuote->collectTotals();
             $this->checkoutSession->replaceQuote($newQuote);
         }
     }

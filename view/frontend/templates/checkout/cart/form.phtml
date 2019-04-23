@@ -19,7 +19,7 @@
     <script>
         require(['jquery'],function() {
             jQuery(".form_template_request").hide();
-        }
+        })
     </script>
     <?php $templateValue = $block->getTemplateNonRegisteredUser()?>
             <input name="template" type="hidden" value="<?= $block->escapeHtml(array_pop($templateValue)['value'])?>"/>
