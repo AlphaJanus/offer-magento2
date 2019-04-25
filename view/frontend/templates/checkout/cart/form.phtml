@@ -1,30 +1,32 @@
 <?php
 /** @var $block \Netzexpert\Offer\Block\Checkout\Cart\Form */
 ?>
-<form id="send-quote-form" class="form_email" method="post">
-    <input name="email" placeholder="enter email address" title="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+<form id="send-quote-form" class="form_email" method="post" xmlns="http://www.w3.org/1999/html">
+    <input name="email" placeholder="Enter email address" title="<?php /* @escapeNotVerified */ echo __('Email') ?>"
            value="<?php echo $block->escapeHtml($block->getStoreEmail()) ?>"
-           class="input-text" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
-    <input name="name" placeholder="enter name and surname" title="<?php /* @escapeNotVerified */ echo __('Name') ?>"
+           class="input-email" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
+    <input name="name" placeholder="Enter name and surname" title="<?php /* @escapeNotVerified */ echo __('Name') ?>"
            value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>"
-           class="input-text" type="text" data-validate="{required:true}"/>
+           class="input-name" type="text" data-validate="{required:true}"/>
+    <textarea name="comment" placeholder="Leave your comment here" title="<?php /* @escapeNotVerified */ echo __('Comment') ?>"
+              class="comment" type="text" data-validate="{required:true}"></textarea>
     <?php if ($block->checkCustomer() == true):?>
-    <select name="template" class="form_template_request" type="text">
-        <?php
-        foreach ($block->getAvailableTemplates() as $template) :?>
-            <option value="<?= $block->escapeHtml($template['value']) ?>"><?= $block->escapeHtml($template['label']) ?></option>
-        <?php endforeach; ?>
-    </select>
+        <select name="template" class="form_template_request" type="text">
+            <?php
+            foreach ($block->getAvailableTemplates() as $template) :?>
+                <option value="<?= $block->escapeHtml($template['value']) ?>"><?= $block->escapeHtml($template['label']) ?></option>
+            <?php endforeach; ?>
+        </select>
     <?php elseif ($block->checkCustomer() == false):?>
-    <script>
-        require(['jquery'],function() {
-            jQuery(".form_template_request").hide();
-        })
-    </script>
+        <script>
+            require(['jquery'],function() {
+                jQuery(".form_template_request").hide();
+            }
+        </script>
     <?php $templateValue = $block->getTemplateNonRegisteredUser()?>
-            <input name="template" type="hidden" value="<?= $block->escapeHtml(array_pop($templateValue)['value'])?>"/>
+    <input name="template" type="hidden" value="<?= $block->escapeHtml(array_pop($templateValue)['value'])?>"/>
     <?php endif; ?>
-    <button id="send-quote" type="submit" title="<?= /* @escapeNotVerified */ __('Send Cart') ?>" class="action_update">
+    <button id="send-quote" type="submit" title="<?= /* @escapeNotVerified */ __('Send Cart') ?>" class="action_button">
         <span><?= /* @escapeNotVerified */ __('Send Cart') ?></span>
     </button>
 </form>

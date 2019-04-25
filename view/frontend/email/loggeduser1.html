@@ -10,7 +10,7 @@
 <table class="table">
     <tr>
         <th>
-        Please, follow this link to view the cart.
+            Please, follow this link to view the cart.
         </th>
     </tr>
     <tr>
@@ -19,6 +19,18 @@
         </td>
     </tr>
 </table>
+<br>
+{{if comment }}
+<strong>User's comment:</strong>
+<table class="table">
+    <tr>
+        <td bgcolor=#EAEAEA>
+            {{var comment}}
+        </td>
+    </tr>
+</table>
+<br>
+{{/if}}
 <table>
     <tr class="email-intro">
     </tr>
