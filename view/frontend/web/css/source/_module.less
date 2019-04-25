@@ -14,3 +14,34 @@
     }
   }
 }
+& when (@media-common = true) {
+  .checkout-cart-index {
+    .cart-container {
+      #send-quote-form {
+        width: 73%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3%;
+        flex-flow: row wrap;
+        .input-email {
+          width: 44%;
+          order: 1;
+        }
+        .input-name {
+          width: 40%;
+          order: 2;
+        }
+        .comment {
+          flex: 1 100%;
+          order: 4;
+        }
+        .action_button {
+          order: 3;
+          width: 13%;
+          margin-left: 1%;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
