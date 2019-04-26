@@ -4,9 +4,6 @@
  */
  -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <head>
-        <css src="Netzexpert_Offer::css/form.css"/>
-    </head>
     <body>
         <referenceContainer name="checkout.cart.container">
             <block class="Netzexpert\Offer\Block\Checkout\Cart\Form" name="offer.form" template="Netzexpert_Offer::checkout/cart/form.phtml" after="cart.discount"/>

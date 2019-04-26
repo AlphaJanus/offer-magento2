@@ -1,14 +1,16 @@
 <?php
 /** @var $block \Netzexpert\Offer\Block\Checkout\Cart\FormSendMyAccount */
 ?>
-<form id="send-quote-form" class="form_email" method="post">
+<form id="send-quote-form" class="form_cart" method="post">
     <input type="hidden" name="offer_id" value="<?= $block->getOfferId(); ?>" />
-    <input name="email" placeholder="enter email address" title="<?php /* @escapeNotVerified */ echo __('Email') ?>"
-           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>"
-           class="input-text" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
-    <input name="name" placeholder="enter name and surname" title="<?php /* @escapeNotVerified */ echo __('Name') ?>"
+    <input name="email" placeholder="Enter email address" title="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+           value="<?php echo $block->escapeHtml($block->getStoreEmail()) ?>"
+           class="input-email" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
+    <input name="name" placeholder="Enter name and surname" title="<?php /* @escapeNotVerified */ echo __('Name') ?>"
            value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>"
-           class="input-text" type="text" data-validate="{required:true}"/>
+           class="input-name" type="text" data-validate="{required:true}"/>
+    <textarea name="comment" placeholder="Leave your comment here" title="<?php /* @escapeNotVerified */ echo __('Comment') ?>"
+              class="comment" type="text" data-validate="{required:true}"></textarea>
     <select name="template" class="form_template" type="text">
         <?php
         foreach ($block->getAvailableTemplates() as $template) {
@@ -18,7 +20,7 @@
         }
         ?>
     </select>
-    <button id="send-quote" type="submit" title="<?= /* @escapeNotVerified */ __('Send Cart') ?>" class="action_update">
+    <button id="send-quote" type="submit" title="<?= /* @escapeNotVerified */ __('Send Cart') ?>" class="action_button">
         <span><?= /* @escapeNotVerified */ __('Send Cart') ?></span>
     </button>
 </form>

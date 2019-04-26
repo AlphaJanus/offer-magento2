@@ -15,10 +15,13 @@
   }
 }
 & when (@media-common = true) {
-  .checkout-cart-index {
-    .cart-container {
+  .checkout-cart-index, .offer-offer-view {
+    .cart-container, .columns {
       #send-quote-form {
         width: 73%;
+        &.form_cart {
+          width: 100%;
+        }
         display: flex;
         justify-content: space-between;
         margin-bottom: 3%;
@@ -41,6 +44,9 @@
           width: 13%;
           margin-left: 1%;
           white-space: nowrap;
+        }
+        .form_template, .form_template_request {
+          margin-bottom: 10px;
         }
       }
     }

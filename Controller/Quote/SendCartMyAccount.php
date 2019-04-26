@@ -83,7 +83,8 @@ class SendCartMyAccount extends \Magento\Framework\App\Action\Action
                     'quote'        => $quote,
                     'link'         => $link,
                     'feedback'     => $feedback,
-                    'name'         => $data['name']
+                    'name'         => $data['name'],
+                    'comment'      => $data['comment']
                 ]
             )
             ->setFrom('general')
