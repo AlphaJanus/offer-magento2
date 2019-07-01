@@ -8,7 +8,9 @@
 
 namespace Netzexpert\Offer\Block\Checkout\Cart;
 
+use Magento\Checkout\Model\Session;
 use Magento\Email\Model\Template\Config;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
 
 class Form extends \Magento\Framework\View\Element\Template
@@ -23,6 +25,9 @@ class Form extends \Magento\Framework\View\Element\Template
      */
     private $customerSession;
 
+    /** @var Session  */
+    private $checkoutSession;
+
     /**
      * @var \Magento\Customer\Api\GroupRepositoryInterface
      */
@@ -35,14 +40,17 @@ class Form extends \Magento\Framework\View\Element\Template
 
     /**
      * Form constructor.
-     * @param \Magento\Customer\Model\Session $session
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param Session $checkoutSession
      * @param Template\Context $context
      * @param Config $config
      * @param \Magento\Customer\Api\GroupRepositoryInterface $groupRepository
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param array $data
      */
     public function __construct(
         \Magento\Customer\Model\Session $customerSession,
+        Session $checkoutSession,
         Template\Context $context,
         Config $config,
         \Magento\Customer\Api\GroupRepositoryInterface $groupRepository,
@@ -50,6 +58,7 @@ class Form extends \Magento\Framework\View\Element\Template
         array $data = [])
     {
         $this->customerSession = $customerSession;
+        $this->checkoutSession = $checkoutSession;
         $this->groupRepository = $groupRepository;
         $this->_scopeConfig = $scopeConfig;
         parent::__construct($context, $data);
@@ -103,21 +112,16 @@ class Form extends \Magento\Framework\View\Element\Template
         return false;
     }
 
-//    /**
-//     * @return string
-//     * @throws \Magento\Framework\Exception\LocalizedException
-//     * @throws \Magento\Framework\Exception\NoSuchEntityException
-//     */
-//    protected function _toHtml()
-//    {
-//        $inGroup = null;
-//        if ($this->customerSession->isLoggedIn()) {
-//            $customer = $this->customerSession->getCustomer()->getGroupId();
-//            $inGroup = $this->groupRepository->getById($customer)->getCode();
-//        }
-//        if ($inGroup !== 'Mitarbeiter') {
-//            return '';
-//        }
-//        return parent::_toHtml();
-//    }
+    /**
+     * Returns items count in current cart
+     * @return bool|int
+     */
+    public function getItemsCount()
+    {
+        try {
+            return $this->checkoutSession->getQuote()->getItemsCount();
+        } catch (LocalizedException $exception) {
+            return false;
+        }
+    }
 }

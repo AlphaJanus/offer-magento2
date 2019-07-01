@@ -1,6 +1,8 @@
 <?php
 /** @var $block \Netzexpert\Offer\Block\Checkout\Cart\Form */
 ?>
+
+<?php if ($block->getItemsCount()) { ?>
 <form id="send-quote-form" class="form_email" method="post" xmlns="http://www.w3.org/1999/html">
     <input name="email" placeholder="<?= /* @escapeNotVerified */ __('Enter email address') ?>" title="<?php /* @escapeNotVerified */ echo __('Enter email address') ?>"
            value="<?php echo $block->escapeHtml($block->getStoreEmail()) ?>"
@@ -21,12 +23,12 @@
         <script>
             require(['jquery'],function() {
                 jQuery(".form_template_request").hide();
-            }
+            });
         </script>
     <?php $templateValue = $block->getTemplateNonRegisteredUser()?>
     <input name="template" type="hidden" value="<?= $block->escapeHtml(array_pop($templateValue)['value'])?>"/>
     <?php endif; ?>
-    <button id="send-quote" type="submit" title="<?= /* @escapeNotVerified */ __('Send Cart') ?>" class="action_button">
+    <button id="send-quote" type="submit" title="<?= /* @escapeNotVerified */ __('Send Cart') ?>" class="action">
         <span><?= /* @escapeNotVerified */ __('Send Cart') ?></span>
     </button>
 </form>
@@ -43,13 +45,12 @@
                     data: data,
                     showLoader: true,
                     context: jQuery('body'),
-                    cache: false,
-                    success: function(response){
-                        console.log(response.output);
-                    }
+                    cache: false
                 });
                     return false;
             });
         });
     });
 </script>
+
+<?php } ?>
