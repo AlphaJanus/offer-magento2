@@ -5,7 +5,6 @@
 <?php if ($block->getItemsCount()) { ?>
 <form id="send-quote-form" class="form_email" method="post" xmlns="http://www.w3.org/1999/html">
     <input name="email" placeholder="<?= /* @escapeNotVerified */ __('Enter email address') ?>" title="<?php /* @escapeNotVerified */ echo __('Enter email address') ?>"
-           value="<?php echo $block->escapeHtml($block->getStoreEmail()) ?>"
            class="input-email" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
     <input name="name" placeholder="<?= /* @escapeNotVerified */ __('Enter name and surname') ?>" title="<?= /* @escapeNotVerified */ __('Enter name and surname') ?>"
            value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>"
