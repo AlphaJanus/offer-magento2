@@ -2,13 +2,13 @@
 /** @var $block \Netzexpert\Offer\Block\Checkout\Cart\Form */
 ?>
 <form id="send-quote-form" class="form_email" method="post" xmlns="http://www.w3.org/1999/html">
-    <input name="email" placeholder="Enter email address" title="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+    <input name="email" placeholder="<?= /* @escapeNotVerified */ __('Enter email address') ?>" title="<?php /* @escapeNotVerified */ echo __('Enter email address') ?>"
            value="<?php echo $block->escapeHtml($block->getStoreEmail()) ?>"
            class="input-email" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
-    <input name="name" placeholder="Enter name and surname" title="<?php /* @escapeNotVerified */ echo __('Name') ?>"
+    <input name="name" placeholder="<?= /* @escapeNotVerified */ __('Enter name and surname') ?>" title="<?= /* @escapeNotVerified */ __('Enter name and surname') ?>"
            value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>"
-           class="input-name" type="text" data-validate="{required:true}"/>
-    <textarea name="comment" placeholder="Leave your comment here" title="<?php /* @escapeNotVerified */ echo __('Comment') ?>"
+           class="input-name" type="text" data-validate="{required:true}" />
+    <textarea name="comment" placeholder="<?= /* @escapeNotVerified */ __('Leave your comment here') ?>" title="<?php /* @escapeNotVerified */ echo __('Leave your comment here') ?>"
               class="comment" type="text" data-validate="{required:true}"></textarea>
     <?php if ($block->checkCustomer() == true):?>
         <select name="template" class="form_template_request" type="text">
@@ -53,4 +53,3 @@
         });
     });
 </script>
-
