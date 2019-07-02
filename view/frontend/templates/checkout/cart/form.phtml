@@ -3,6 +3,11 @@
 ?>
 
 <?php if ($block->getItemsCount()) { ?>
+<div class="information-text">
+        <blockquote>
+            <?= /* @escapeNotVerified */ __('If you have questions about your configuration, use this form. We are always happy to help.') ?>
+        </blockquote>
+    </div>
 <form id="send-quote-form" class="form_email" method="post" xmlns="http://www.w3.org/1999/html">
     <input name="email" placeholder="<?= /* @escapeNotVerified */ __('Enter email address') ?>" title="<?php /* @escapeNotVerified */ echo __('Enter email address') ?>"
            class="input-email" type="email" data-validate="{required:true, 'validate-email':true, equalTo:'#email'}"/>
