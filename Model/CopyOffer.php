@@ -8,6 +8,7 @@
 
 namespace Netzexpert\Offer\Model;
 
+use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Message\Manager;
@@ -32,12 +33,14 @@ class CopyOffer
     public function __construct(
         CheckoutSession $checkoutSession,
         QuoteRepository $quoteRepository,
-        Manager $manager
+        Manager $manager,
+        ProductRepository $productRepository
     )
     {
         $this->checkoutSession = $checkoutSession;
         $this->quoteRepository = $quoteRepository;
         $this->messageManager = $manager;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -61,13 +64,18 @@ class CopyOffer
              /** @var Quote\Item $item */
              foreach ($items as $item)
              {
-                 $_product = $item->getProduct();
-                 $options = $_product->getTypeInstance()->getOrderOptions($item->getProduct());
+                 $_product = $item->getProduct()->getData('entity_id');
+                 try {
+                     $product = $this->productRepository->getById($_product);
+                 } catch ( \Exception $exception) {
+                     $this->messageManager->addError(__($exception->getMessage()));
+                 }
+                 $options = $product->getTypeInstance()->getOrderOptions($item->getProduct());
                  $info = $options['info_buyRequest'];
                  $request1 = new \Magento\Framework\DataObject();
                  $request1->setData($info);
                  try {
-                     $quote->addProduct($_product, $request1);
+                     $quote->addProduct($product, $request1);
                  } catch (LocalizedException $exception) {
                      $this->messageManager->addError($exception->getMessage());
                  }

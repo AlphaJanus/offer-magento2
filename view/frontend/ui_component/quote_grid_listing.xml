@@ -74,16 +74,16 @@
         </paging>
     </listingToolbar>
     <columns name="quote_grid_columns">
-        <selectionsColumn name="ids">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="resizeEnabled" xsi:type="boolean">false</item>
-                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
-                    <item name="label" xsi:type="string" translate="true">IDs</item>
-                    <item name="indexField" xsi:type="string">date</item>
-                </item>
-            </argument>
-        </selectionsColumn>
+<!--        <selectionsColumn name="ids">-->
+<!--            <argument name="data" xsi:type="array">-->
+<!--                <item name="config" xsi:type="array">-->
+<!--                    <item name="resizeEnabled" xsi:type="boolean">false</item>-->
+<!--                    <item name="resizeDefaultWidth" xsi:type="string">55</item>-->
+<!--                    <item name="label" xsi:type="string" translate="true">IDs</item>-->
+<!--                    <item name="indexField" xsi:type="string">date</item>-->
+<!--                </item>-->
+<!--            </argument>-->
+<!--        </selectionsColumn>-->
         <column name="date">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
