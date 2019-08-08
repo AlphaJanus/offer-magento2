@@ -8,6 +8,7 @@
 
 namespace Netzexpert\Offer\Controller\Quote;
 
+use Magento\Customer\Model\Session;
 use Magento\Framework\App\Action\Context;
 
 
@@ -39,6 +40,11 @@ class SendCartMyAccount extends \Magento\Framework\App\Action\Action
     private $quoteRepository;
 
     /**
+     * @var Session
+     */
+    private $customerSession;
+
+    /**
      * SendCartMyAccount constructor.
      * @param Context $context
      * @param \Magento\Framework\App\Request\Http $request
@@ -53,13 +59,15 @@ class SendCartMyAccount extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\UrlInterface $urlInterface,
-        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository
+        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
+        Session $customerSession
     ) {
         $this->request = $request;
         $this->transportBuilder = $transportBuilder;
         $this->storeManager = $storeManager;
         $this->_url = $urlInterface;
         $this->quoteRepository = $quoteRepository;
+        $this->customerSession = $customerSession;
         parent::__construct($context);
     }
 
@@ -74,6 +82,7 @@ class SendCartMyAccount extends \Magento\Framework\App\Action\Action
         $store = $this->storeManager->getStore()->getId();
         $quote = $this->quoteRepository->get($data['offer_id']);
         $link = $this->_url->getUrl('offer/quote/duplicate', ['id' => $quote->getId()]);
+        $adminUser = $this->customerSession->getCustomer()->getData();
         $feedback = $this->_url->getUrl('contact/index/index');
         $transport = $this->transportBuilder->setTemplateIdentifier($data['template'])
             ->setTemplateOptions(['area' => 'frontend', 'store' => $store])
@@ -84,7 +93,8 @@ class SendCartMyAccount extends \Magento\Framework\App\Action\Action
                     'link'         => $link,
                     'feedback'     => $feedback,
                     'name'         => $data['name'],
-                    'comment'      => $data['comment']
+                    'comment'      => $data['comment'],
+                    'adminUser'    => $adminUser['firstname'].' '. $adminUser['lastname']
                 ]
             )
             ->setFrom('general')

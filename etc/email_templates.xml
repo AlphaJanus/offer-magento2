@@ -2,4 +2,5 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
     <template id="offer_email_template1" label="Email Cart Template" file="loggeduser1.html" type="html" module="Netzexpert_Offer" area="frontend"/>
     <template id="offer_email_template2" label="Email Cart Template2" file="loggeduser2.html" type="html" module="Netzexpert_Offer" area="frontend"/>
+    <template id="offer_email_template3" label="Angebotsanfrage" file="savedcarts.html" type="html" module="Netzexpert_Offer" area="frontend"/>
 </config>
