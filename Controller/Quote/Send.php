@@ -156,6 +156,7 @@ class Send extends \Magento\Framework\App\Action\Action
         $store = $this->storeManager->getStore()->getId();
         $quote = $this->checkoutSession->getQuote();
         $link = $this->_url->getUrl('offer/quote/duplicate', ['id' => $quote->getId()]);
+        $adminUser = $this->customerSession->getCustomer()->getData();
         $feedback = $this->_url->getUrl('contact/index/index');
         $transport = $this->transportBuilder->setTemplateIdentifier($data['template'])
             ->setTemplateOptions(['area' => 'frontend', 'store' => $store])
@@ -166,7 +167,8 @@ class Send extends \Magento\Framework\App\Action\Action
                     'link'         => $link,
                     'feedback'     => $feedback,
                     'name'         => $data['name'],
-                    'comment'      => $data['comment']
+                    'comment'      => $data['comment'],
+                    'adminUser'    => $adminUser['firstname'].' '. $adminUser['lastname']
                 ]
             )
             ->setFrom('general')
@@ -175,6 +177,8 @@ class Send extends \Magento\Framework\App\Action\Action
         $this->saveQuote($quote);
         $this->redirectQuote();
         $transport->sendMessage();
+        $this->messageManager->addSuccessMessage('Ihre Anfrage wurde gesendet. Wir werden ihnen in Kürze auf Ihre Anfrage antworten.');
+        $this->_redirect->success('/');
     }
 
     /**
