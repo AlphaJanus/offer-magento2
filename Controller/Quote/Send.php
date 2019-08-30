@@ -157,6 +157,7 @@ class Send extends \Magento\Framework\App\Action\Action
         $quote = $this->checkoutSession->getQuote();
         $link = $this->_url->getUrl('offer/quote/duplicate', ['id' => $quote->getId()]);
         $adminUser = $this->customerSession->getCustomer()->getData();
+        $name = (key_exists('firstname', $adminUser) && key_exists('lastname', $adminUser)) ? $adminUser['firstname'].' '. $adminUser['lastname'] : '';
         $feedback = $this->_url->getUrl('contact/index/index');
         $transport = $this->transportBuilder->setTemplateIdentifier($data['template'])
             ->setTemplateOptions(['area' => 'frontend', 'store' => $store])
@@ -168,7 +169,7 @@ class Send extends \Magento\Framework\App\Action\Action
                     'feedback'     => $feedback,
                     'name'         => $data['name'],
                     'comment'      => $data['comment'],
-                    'adminUser'    => $adminUser['firstname'].' '. $adminUser['lastname']
+                    'adminUser'    => $name
                 ]
             )
             ->setFrom('general')
