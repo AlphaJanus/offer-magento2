@@ -176,7 +176,8 @@ class Send extends \Magento\Framework\App\Action\Action
             ->addTo($data['email'])
             ->getTransport();
         $this->saveQuote($quote);
-        $this->redirectQuote();
+//        $this->redirectQuote();
+        $this->clearQuote();
         $transport->sendMessage();
         $this->messageManager->addSuccessMessage('Ihre Anfrage wurde gesendet. Wir werden ihnen in Kürze auf Ihre Anfrage antworten.');
         $this->_redirect->success('/');
@@ -263,5 +264,12 @@ class Send extends \Magento\Framework\App\Action\Action
             }
             $this->checkoutSession->replaceQuote($newQuote);
         }
+    }
+
+    /**
+     * Clear current quote
+     */
+    public function clearQuote() {
+        $this->cart->truncate()->save();
     }
 }
