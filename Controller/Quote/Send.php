@@ -91,6 +91,21 @@ class Send extends \Magento\Framework\App\Action\Action
     private $message;
 
     /**
+     * @var \Magento\Customer\Api\GroupRepositoryInterface
+     */
+    private $groupRepository;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    private $scopeConfig;
+
+    /**
+     * @var null
+     */
+    private $requestData = null;
+
+    /**
      * Send constructor.
      * @param Context $context
      * @param \Magento\Framework\App\Request\Http $request
@@ -108,6 +123,8 @@ class Send extends \Magento\Framework\App\Action\Action
      * @param \Magento\Quote\Model\QuoteFactory $quote
      * @param ProductRepository $productRepository
      * @param \Magento\Framework\Message\Manager $message
+     * @param \Magento\Customer\Api\GroupRepositoryInterface $groupRepository
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         Context $context,
@@ -125,7 +142,9 @@ class Send extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Controller\Result\RedirectFactory $redirectFactory,
         \Magento\Quote\Model\QuoteFactory $quote,
         ProductRepository $productRepository,
-        \Magento\Framework\Message\Manager $message
+        \Magento\Framework\Message\Manager $message,
+        \Magento\Customer\Api\GroupRepositoryInterface $groupRepository,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         $this->request = $request;
         $this->checkoutSession  = $session;
@@ -142,6 +161,8 @@ class Send extends \Magento\Framework\App\Action\Action
         $this->quote = $quote;
         $this->productRepository = $productRepository;
         $this->message = $message;
+        $this->groupRepository = $groupRepository;
+        $this->scopeConfig = $scopeConfig;
         parent::__construct($context);
     }
 
@@ -153,6 +174,7 @@ class Send extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $data = $this->request->getParams();
+        $this->requestData = $data;
         $store = $this->storeManager->getStore()->getId();
         $quote = $this->checkoutSession->getQuote();
         $link = $this->_url->getUrl('offer/quote/duplicate', ['id' => $quote->getId()]);
@@ -169,11 +191,12 @@ class Send extends \Magento\Framework\App\Action\Action
                     'feedback'     => $feedback,
                     'name'         => $data['name'],
                     'comment'      => $data['comment'],
-                    'adminUser'    => $name
+                    'adminUser'    => $name,
+                    'userEmail'    => $this->checkUserEmail()
                 ]
             )
             ->setFrom('general')
-            ->addTo($data['email'])
+            ->addTo($this->checkCustomer())
             ->getTransport();
         $this->saveQuote($quote);
 //        $this->redirectQuote();
@@ -271,5 +294,50 @@ class Send extends \Magento\Framework\App\Action\Action
      */
     public function clearQuote() {
         $this->cart->truncate()->save();
+    }
+
+    /**
+     * Get Store Email
+     * @return mixed
+     */
+    public function getStoreEmail()
+    {
+        return $this->scopeConfig->getValue(
+            'trans_email/ident_sales/email',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Check if customer in Mitarbeiter group or unregistered/simple user
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     */
+    public function checkCustomer()
+    {
+        $customer = $this->customerSession->getCustomer()->getGroupId();
+        $inGroup = $this->groupRepository->getById($customer)->getCode();
+
+        if ($inGroup == 'Mitarbeiter') {
+            return $this->requestData['email'];
+        }
+        return $email = $this->getStoreEmail();
+    }
+
+    /**
+     * Get user email if unregistered/simple user
+     * @return bool|mixed
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     */
+    public function checkUserEmail()
+    {
+        $customer = $this->customerSession->getCustomer()->getGroupId();
+        $inGroup = $this->groupRepository->getById($customer)->getCode();
+
+        if ($inGroup == 'Mitarbeiter') {
+            return false;
+        }
+        return $this->requestData['email'];
     }
 }
