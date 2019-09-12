@@ -199,8 +199,7 @@ class Send extends \Magento\Framework\App\Action\Action
             ->addTo($this->checkCustomer())
             ->getTransport();
         $this->saveQuote($quote);
-//        $this->redirectQuote();
-        $this->clearQuote();
+        $this->redirectQuote();
         $transport->sendMessage();
         $this->messageManager->addSuccessMessage('Ihre Anfrage wurde gesendet. Wir werden ihnen in Kürze auf Ihre Anfrage antworten.');
         $this->_redirect->success('/');
