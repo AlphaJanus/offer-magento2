@@ -201,6 +201,7 @@ class Send extends \Magento\Framework\App\Action\Action
         $this->saveQuote($quote);
 //        $this->redirectQuote();
         $newQuote = $this->quote->create();
+        $newQuote->save();
         $this->checkoutSession->replaceQuote($newQuote);
         $transport->sendMessage();
         $this->messageManager->addSuccessMessage('Ihre Anfrage wurde gesendet. Wir werden ihnen in Kürze auf Ihre Anfrage antworten.');
