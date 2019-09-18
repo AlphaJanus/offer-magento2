@@ -17,6 +17,7 @@
     <?php else:?>
         <tr class="<?= /* @escapeNotVerified */ $_code ?>">
             <th <?= /* @escapeNotVerified */ $block->getLabelProperties() ?> scope="row">
+                <?php if ($_code == 'shipping') {continue;}?>
                 <?php if ($_total->getStrong()):?>
                     <strong><?= $block->escapeHtml($_total->getTitle()) ?></strong>
                 <?php else:?>
