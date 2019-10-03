@@ -74,8 +74,8 @@ class CopyOffer
                  $info = $options['info_buyRequest'];
                  $roundQty = round($info['qty'], 4);
                  $roundQtyOriginalQuote = round($originalQuote->getItemsQty());
-                 if ($roundQtyOriginalQuote != $roundQty ) {
-                     $info['qty'] = ($originalQuote->getItemsQty());
+                 if ($roundQtyOriginalQuote != $roundQty) {
+                     $info['qty'] = $item->getQty();
                  }
                  $request1 = new \Magento\Framework\DataObject();
                  $request1->setData($info);
