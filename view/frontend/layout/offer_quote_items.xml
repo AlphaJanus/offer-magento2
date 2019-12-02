@@ -27,5 +27,15 @@
                 <argument name="template" xsi:type="string">Netzexpert_Offer::checkout/cart/item/default.phtml</argument>
             </action>
         </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.configurator">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Netzexpert_Offer::checkout/cart/item/default.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.configurable">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Netzexpert_Offer::checkout/cart/item/default.phtml</argument>
+            </action>
+        </referenceBlock>
     </body>
 </page>
