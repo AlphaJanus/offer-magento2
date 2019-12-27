@@ -33,9 +33,8 @@ class Totals extends \Magento\Checkout\Block\Cart\Totals
         \Magento\Sales\Model\Config $salesConfig,
         Data $pricingHelper,
         array $layoutProcessors = [],
-        array $data             = []
-    )
-    {
+        array $data = []
+    ) {
         $this->pricingHelper    = $pricingHelper;
         parent::__construct(
             $context,
@@ -51,11 +50,23 @@ class Totals extends \Magento\Checkout\Block\Cart\Totals
      * @param $total Total
      * @return float|string
      */
-    public function formatValue($total) {
+    public function formatValue($total)
+    {
         return $this->pricingHelper->currencyByStore(
             $total->getData('value'),
             $this->getQuote()->getStore(),
             true,
-            false);
+            false
+        );
+    }
+
+    /**
+     * Get customer name for email template
+     * @return string
+     */
+    public function getName()
+    {
+        $name = $this->getRequest()->getParam('name');
+        return $name;
     }
 }
