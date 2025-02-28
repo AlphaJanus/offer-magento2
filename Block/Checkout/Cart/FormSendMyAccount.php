@@ -6,7 +6,7 @@
  * Time: 11:25
  */
 
-namespace Netzexpert\Offer\Block\Checkout\Cart;
+namespace Cartshare\Offer\Block\Checkout\Cart;
 
 use Magento\Email\Model\Template\Config;
 use Magento\Framework\View\Element\Template;
@@ -58,7 +58,7 @@ class FormSendMyAccount extends \Magento\Framework\View\Element\Template
 
     public function getAvailableTemplates() {
         $templates = $this->emailConfig->getAvailableTemplates();
-        $module = 'Netzexpert_Offer';
+        $module = 'Cartshare_Offer';
         return array_filter($templates, function ($var) use ($module) {
             return ($var['group'] == $module);
         });

@@ -6,7 +6,7 @@
  * Time: 17:50
  */
 
-namespace Netzexpert\Offer\Model\ResourceModel\OfferItem;
+namespace Cartshare\Offer\Model\ResourceModel\OfferItem;
 
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
@@ -18,6 +18,6 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init('Netzexpert\Offer\Model\OfferItem', '\Netzexpert\Offer\Model\ResourceModel\OfferItem');
+        $this->_init('Cartshare\Offer\Model\OfferItem', '\Cartshare\Offer\Model\ResourceModel\OfferItem');
     }
 }

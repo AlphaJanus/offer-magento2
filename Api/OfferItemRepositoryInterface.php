@@ -6,16 +6,16 @@
  * Time: 17:26
  */
 
-namespace Netzexpert\Offer\Api;
+namespace Cartshare\Offer\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Netzexpert\Offer\Api\Data\OfferItemInterface;
+use Cartshare\Offer\Api\Data\OfferItemInterface;
 
 interface OfferItemRepositoryInterface
 {
     /**
      * @param $id
-     * @return \Netzexpert\Offer\Api\Data\OfferItemInterface
+     * @return \Cartshare\Offer\Api\Data\OfferItemInterface
      */
     public function getById($id);
 

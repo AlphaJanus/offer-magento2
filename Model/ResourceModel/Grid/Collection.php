@@ -6,7 +6,7 @@
  * Time: 11:24
  */
 
-namespace Netzexpert\Offer\Model\ResourceModel\Grid;
+namespace Cartshare\Offer\Model\ResourceModel\Grid;
 
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface as FetchStrategy;
 use Magento\Framework\Data\Collection\EntityFactoryInterface as EntityFactory;
@@ -16,7 +16,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Class Collection
- * @package Netzexpert\Offer\Model\ResourceModel\Grid
+ * @package Cartshare\Offer\Model\ResourceModel\Grid
  */
 class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult
 {
@@ -45,7 +45,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         FetchStrategy $fetchStrategy,
         ManagerInterface $eventManager,
         $mainTable = 'offer_quote',
-        $resourceModel = 'Netzexpert\Offer\Model\ResourceModel\Offer',
+        $resourceModel = 'Cartshare\Offer\Model\ResourceModel\Offer',
         $identifierName = null,
         $connectionName = null
     )

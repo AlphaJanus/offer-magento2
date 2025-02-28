@@ -6,9 +6,9 @@
  * Time: 11:58
  */
 
-namespace Netzexpert\Offer\Model;
+namespace Cartshare\Offer\Model;
 
-use Netzexpert\Offer\Api\Data\OfferInterface;
+use Cartshare\Offer\Api\Data\OfferInterface;
 
 class Offer extends \Magento\Framework\Model\AbstractModel implements OfferInterface,
     \Magento\Framework\DataObject\IdentityInterface
@@ -17,7 +17,7 @@ class Offer extends \Magento\Framework\Model\AbstractModel implements OfferInter
 
     public function _construct()
     {
-        $this->_init('Netzexpert\Offer\Model\ResourceModel\Offer');
+        $this->_init('Cartshare\Offer\Model\ResourceModel\Offer');
     }
 
     /**
@@ -92,7 +92,7 @@ class Offer extends \Magento\Framework\Model\AbstractModel implements OfferInter
     /**
      * Set Email
      * @param $email
-     * @return \Netzexpert\Offer\Api\Data\OfferInterface
+     * @return \Cartshare\Offer\Api\Data\OfferInterface
      */
     public function setEmail($email)
     {

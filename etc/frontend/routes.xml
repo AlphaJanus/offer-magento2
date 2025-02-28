@@ -2,12 +2,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="standard">
         <route id="offer" frontName="offer">
-            <module name="Netzexpert_Offer" />
+            <module name="Cartshare_Offer" />
         </route>
     </router>
     <router id="offer">
         <route id="offer" frontName="offer">
-            <module name="Netzexpert_Offer"/>
+            <module name="Cartshare_Offer"/>
         </route>
     </router>
 </config>

@@ -6,7 +6,7 @@
  * Time: 11:02
  */
 
-namespace Netzexpert\Offer\Controller\Quote;
+namespace Cartshare\Offer\Controller\Quote;
 
 use Magento\Customer\Model\Session;
 use Magento\Framework\App\Action\Context;

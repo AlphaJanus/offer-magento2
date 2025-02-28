@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!--
- * Netzexpert Offer Product Extension
+ * Cartshare Offer Product Extension
  */
  -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="Netzexpert\Offer\Block\Checkout\Cart\Form" name="offer.form" template="Netzexpert_Offer::checkout/cart/form.phtml" after="-"/>
+            <block class="Cartshare\Offer\Block\Checkout\Cart\Form" name="offer.form" template="Cartshare_Offer::checkout/cart/form.phtml" after="-"/>
         </referenceContainer>
     </body>
 </page>

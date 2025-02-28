@@ -6,7 +6,7 @@
  * Time: 10:21
  */
 
-namespace Netzexpert\Offer\Block\Checkout\Cart\Item\Renderer\Actions;
+namespace Cartshare\Offer\Block\Checkout\Cart\Item\Renderer\Actions;
 
 use Magento\Checkout\Block\Cart\Item\Renderer\Actions\Generic;
 

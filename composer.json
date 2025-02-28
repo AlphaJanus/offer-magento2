@@ -3,7 +3,7 @@
     "description": "N/A",
     "require": {
         "php": ">=7.4",
-        "magento/framework": "*"
+        "magento/framework": "103.0.*"
     },
     "type": "magento2-module",
     "version": "1.1.15",
@@ -16,7 +16,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Netzexpert\\Offer\\": ""
+            "Cartshare\\Offer\\": ""
         }
     },
     "repositories": [

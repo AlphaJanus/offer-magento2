@@ -6,7 +6,7 @@
  * Time: 10:09
  */
 
-namespace Netzexpert\Offer\Ui\DataProvider\Offer;
+namespace Cartshare\Offer\Ui\DataProvider\Offer;
 
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\ReportingInterface;

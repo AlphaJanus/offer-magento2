@@ -6,7 +6,7 @@
  * Time: 12:19
  */
 
-namespace Netzexpert\Offer\Block\Checkout\Cart\Item;
+namespace Cartshare\Offer\Block\Checkout\Cart\Item;
 
 use Magento\Catalog\Pricing\Price\ConfiguredPriceInterface;
 use Magento\Checkout\Block\Cart\Item\Renderer\Actions;

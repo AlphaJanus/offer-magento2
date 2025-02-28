@@ -6,10 +6,10 @@
  * Time: 14:08
  */
 
-namespace Netzexpert\Offer\Controller\Quote;
+namespace Cartshare\Offer\Controller\Quote;
 
 use Magento\Quote\Api\Data\CartItemInterfaceFactory;
-use Netzexpert\Offer\Model\CopyOffer;
+use Cartshare\Offer\Model\CopyOffer;
 
 class Duplicate extends \Magento\Framework\App\Action\Action
 {

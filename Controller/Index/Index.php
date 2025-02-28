@@ -6,7 +6,7 @@
  * Time: 10:56
  */
 
-namespace Netzexpert\Offer\Controller\Index;
+namespace Cartshare\Offer\Controller\Index;
 
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;

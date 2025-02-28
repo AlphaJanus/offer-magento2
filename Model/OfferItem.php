@@ -6,9 +6,9 @@
  * Time: 15:16
  */
 
-namespace Netzexpert\Offer\Model;
+namespace Cartshare\Offer\Model;
 
-use Netzexpert\Offer\Api\Data\OfferItemInterface;
+use Cartshare\Offer\Api\Data\OfferItemInterface;
 
 class OfferItem extends \Magento\Framework\Model\AbstractModel implements OfferItemInterface,
     \Magento\Framework\DataObject\IdentityInterface
@@ -17,7 +17,7 @@ class OfferItem extends \Magento\Framework\Model\AbstractModel implements OfferI
 
     public function _construct()
     {
-        $this->_init('\Netzexpert\Offer\Model\ResourceModel\OfferItem');
+        $this->_init('\Cartshare\Offer\Model\ResourceModel\OfferItem');
     }
 
     /**

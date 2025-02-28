@@ -6,7 +6,7 @@
  * Time: 11:53
  */
 
-namespace Netzexpert\Offer\Model\ResourceModel;
+namespace Cartshare\Offer\Model\ResourceModel;
 
 
 class Offer extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb

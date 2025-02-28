@@ -6,7 +6,7 @@
  * Time: 15:16
  */
 
-namespace Netzexpert\Offer\Block\Checkout\Cart;
+namespace Cartshare\Offer\Block\Checkout\Cart;
 
 use Magento\Checkout\Model\Session;
 use Magento\Email\Model\Template\Config;
@@ -68,7 +68,7 @@ class Form extends \Magento\Framework\View\Element\Template
     public function getAvailableTemplates()
     {
         $templates = $this->emailConfig->getAvailableTemplates();
-        $module = 'Netzexpert_Offer';
+        $module = 'Cartshare_Offer';
             return array_filter($templates, function ($var) use ($module) {
                 return ($var['group'] == $module);
             });
@@ -77,7 +77,7 @@ class Form extends \Magento\Framework\View\Element\Template
     public function getTemplateNonRegisteredUser()
     {
         $templates = $this->emailConfig->getAvailableTemplates();
-        $module = 'Netzexpert_Offer';
+        $module = 'Cartshare_Offer';
         return array_filter($templates, function ($var) use ($module) {
             return ($var['label'] == 'Email Cart Template');
         });

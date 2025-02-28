@@ -6,7 +6,7 @@
  * Time: 17:51
  */
 
-namespace Netzexpert\Offer\Block\Checkout;
+namespace Cartshare\Offer\Block\Checkout;
 
 
 class OfferCart extends \Magento\Checkout\Block\Cart
@@ -38,7 +38,7 @@ class OfferCart extends \Magento\Checkout\Block\Cart
     private $itemCollectionFactory;
 
     /**
-     * @var \Netzexpert\Offer\Model\OfferRepository
+     * @var \Cartshare\Offer\Model\OfferRepository
      */
     private $offerRepository;
 
@@ -71,7 +71,7 @@ class OfferCart extends \Magento\Checkout\Block\Cart
      * @param \Magento\Quote\Model\ResourceModel\Quote\Item\CollectionFactory $itemCollectionFactory
      * @param \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface $joinProcessor
      * @param \Magento\Framework\App\RequestInterface $request
-     * @param \Netzexpert\Offer\Model\OfferRepository $offerRepository
+     * @param \Cartshare\Offer\Model\OfferRepository $offerRepository
      * @param \Magento\Quote\Model\QuoteFactory $quoteFactory
      * @param \Magento\Framework\DataObject $dataObject
      * @param array $data
@@ -86,7 +86,7 @@ class OfferCart extends \Magento\Checkout\Block\Cart
         \Magento\Quote\Model\ResourceModel\Quote\Item\CollectionFactory $itemCollectionFactory,
         \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface $joinProcessor,
         \Magento\Framework\App\RequestInterface $request,
-        \Netzexpert\Offer\Model\OfferRepository $offerRepository,
+        \Cartshare\Offer\Model\OfferRepository $offerRepository,
         \Magento\Quote\Model\QuoteFactory $quoteFactory,
         \Magento\Framework\DataObject $dataObject,
         array $data = []

@@ -6,7 +6,7 @@
  * Time: 16:20
  */
 
-namespace Netzexpert\Offer\Controller\Offer;
+namespace Cartshare\Offer\Controller\Offer;
 
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\Action;

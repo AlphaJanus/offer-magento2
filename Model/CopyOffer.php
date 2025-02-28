@@ -6,7 +6,7 @@
  * Time: 17:03
  */
 
-namespace Netzexpert\Offer\Model;
+namespace Cartshare\Offer\Model;
 
 use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\Exception\LocalizedException;

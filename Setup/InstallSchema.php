@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzexpert\Offer\Setup;
+namespace Cartshare\Offer\Setup;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;

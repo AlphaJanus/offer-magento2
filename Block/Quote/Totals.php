@@ -6,7 +6,7 @@
  * Time: 17:18
  */
 
-namespace Netzexpert\Offer\Block\Quote;
+namespace Cartshare\Offer\Block\Quote;
 
 use Magento\Framework\Pricing\Helper\Data;
 use Magento\Quote\Model\Quote\Address\Total;

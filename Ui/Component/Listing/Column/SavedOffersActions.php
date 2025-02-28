@@ -6,7 +6,7 @@
  * Time: 15:52
  */
 
-namespace Netzexpert\Offer\Ui\Component\Listing\Column;
+namespace Cartshare\Offer\Ui\Component\Listing\Column;
 
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;

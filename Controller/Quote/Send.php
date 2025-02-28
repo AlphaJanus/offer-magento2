@@ -6,7 +6,7 @@
  * Time: 11:04
  */
 
-namespace Netzexpert\Offer\Controller\Quote;
+namespace Cartshare\Offer\Controller\Quote;
 
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductRepository;
@@ -18,10 +18,10 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Quote\Item;
 use Magento\Quote\Model\QuoteRepository;
-use Netzexpert\Offer\Model\OfferFactory;
-use Netzexpert\Offer\Model\OfferItemFactory;
-use Netzexpert\Offer\Model\OfferRepository;
-use Netzexpert\Offer\Model\OfferItemRepository;
+use Cartshare\Offer\Model\OfferFactory;
+use Cartshare\Offer\Model\OfferItemFactory;
+use Cartshare\Offer\Model\OfferRepository;
+use Cartshare\Offer\Model\OfferItemRepository;
 
 class Send extends \Magento\Framework\App\Action\Action
 {
@@ -39,7 +39,7 @@ class Send extends \Magento\Framework\App\Action\Action
     private $transportBuilder;
 
     /**
-     * @var \Netzexpert\Offer\Model\OfferRepository $offerRepository
+     * @var \Cartshare\Offer\Model\OfferRepository $offerRepository
      */
     private $offerRepository;
     /**
@@ -63,7 +63,7 @@ class Send extends \Magento\Framework\App\Action\Action
     private $date;
 
     /**
-     * @var \Netzexpert\Offer\Model\OfferItemRepository OfferItemRepository
+     * @var \Cartshare\Offer\Model\OfferItemRepository OfferItemRepository
      */
     private $offerItemRepository;
 
@@ -210,7 +210,7 @@ class Send extends \Magento\Framework\App\Action\Action
 
     /**
      * @param $quote
-     * @return bool|\Netzexpert\Offer\Model\Offer|null
+     * @return bool|\Cartshare\Offer\Model\Offer|null
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      * @throws \Magento\Framework\Exception\TemporaryState\CouldNotSaveException
      */

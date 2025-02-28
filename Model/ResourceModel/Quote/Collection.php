@@ -6,7 +6,7 @@
  * Time: 11:56
  */
 
-namespace Netzexpert\Offer\Model\ResourceModel\Quote;
+namespace Cartshare\Offer\Model\ResourceModel\Quote;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchResultsInterface;
@@ -21,7 +21,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init('Netzexpert\Offer\Model\Offer', 'Netzexpert\Offer\Model\ResourceModel\Offer');
+        $this->_init('Cartshare\Offer\Model\Offer', 'Cartshare\Offer\Model\ResourceModel\Offer');
     }
 
     public function setItems(array $items = null)

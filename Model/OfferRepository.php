@@ -6,24 +6,24 @@
  * Time: 10:40
  */
 
-namespace Netzexpert\Offer\Model;
+namespace Cartshare\Offer\Model;
 
 use GuzzleHttp\Exception\ConnectException;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\StateException;
 use Magento\Framework\Validation\ValidationException;
-use \Netzexpert\Offer\Api\Data\OfferInterface;
+use \Cartshare\Offer\Api\Data\OfferInterface;
 
-class OfferRepository implements \Netzexpert\Offer\Api\OfferRepositoryInterface
+class OfferRepository implements \Cartshare\Offer\Api\OfferRepositoryInterface
 {
     private $offerFactory;
 
     private $resourceModel;
 
     public function __construct(
-        \Netzexpert\Offer\Model\OfferFactory $offerFactory,
-        \Netzexpert\Offer\Model\ResourceModel\Offer $resourceModel
+        \Cartshare\Offer\Model\OfferFactory $offerFactory,
+        \Cartshare\Offer\Model\ResourceModel\Offer $resourceModel
     )
     {
         $this->offerFactory = $offerFactory;
@@ -75,7 +75,7 @@ class OfferRepository implements \Netzexpert\Offer\Api\OfferRepositoryInterface
      */
     public function deleteById($id)
     {
-        /** @var \Netzexpert\Offer\Model\Offer $offer */
+        /** @var \Cartshare\Offer\Model\Offer $offer */
         $offer = $this->offerFactory->create();
         $offer->load($offer, $id);
         try {
@@ -110,7 +110,7 @@ class OfferRepository implements \Netzexpert\Offer\Api\OfferRepositoryInterface
      */
     public function get($id)
     {
-        /** @var \Netzexpert\Offer\Model\Offer $offer */
+        /** @var \Cartshare\Offer\Model\Offer $offer */
         $offer = $this->offerFactory->create();
         $offer->load($id);
         if (!$offer->getId()) {
@@ -121,7 +121,7 @@ class OfferRepository implements \Netzexpert\Offer\Api\OfferRepositoryInterface
 
     public function getById($id)
     {
-        /** @var \Netzexpert\Offer\Model\Offer $offer */
+        /** @var \Cartshare\Offer\Model\Offer $offer */
         $offer = $this->offerFactory->create();
         $offer->load($id);
         if (!$offer->getId()) {

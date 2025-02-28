@@ -6,10 +6,10 @@
  * Time: 17:06
  */
 
-namespace Netzexpert\Offer\Api;
+namespace Cartshare\Offer\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Netzexpert\Offer\Api\Data\OfferInterface;
+use Cartshare\Offer\Api\Data\OfferInterface;
 
 interface OfferRepositoryInterface
 {

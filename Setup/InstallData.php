@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzexpert\Offer\Setup;
+namespace Cartshare\Offer\Setup;
 
 use Magento\Customer\Api\GroupRepositoryInterface;
 use Magento\Customer\Api\Data\GroupInterfaceFactory;

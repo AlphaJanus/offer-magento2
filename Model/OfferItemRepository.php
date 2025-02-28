@@ -6,16 +6,16 @@
  * Time: 17:51
  */
 
-namespace Netzexpert\Offer\Model;
+namespace Cartshare\Offer\Model;
 
 use GuzzleHttp\Exception\ConnectException;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\StateException;
 use Magento\Framework\Validation\ValidationException;
-use \Netzexpert\Offer\Api\Data\OfferItemInterface;
+use \Cartshare\Offer\Api\Data\OfferItemInterface;
 
-class OfferItemRepository implements \Netzexpert\Offer\Api\OfferItemRepositoryInterface
+class OfferItemRepository implements \Cartshare\Offer\Api\OfferItemRepositoryInterface
 {
     /**
      * @var OfferItemFactory
@@ -31,7 +31,7 @@ class OfferItemRepository implements \Netzexpert\Offer\Api\OfferItemRepositoryIn
      */
     public function __construct(
         OfferItemFactory $offerItemFactory,
-        \Netzexpert\Offer\Model\ResourceModel\OfferItem $resourceModel
+        \Cartshare\Offer\Model\ResourceModel\OfferItem $resourceModel
     )
     {
         $this->offerItemFactory = $offerItemFactory;
@@ -83,7 +83,7 @@ class OfferItemRepository implements \Netzexpert\Offer\Api\OfferItemRepositoryIn
      */
     public function deleteById($id)
     {
-        /** @var \Netzexpert\Offer\Model\OfferItem $offerItem */
+        /** @var \Cartshare\Offer\Model\OfferItem $offerItem */
         $offer = $this->offerItemFactory->create();
         $offer->load($offerItem, $id);
         try {
@@ -118,7 +118,7 @@ class OfferItemRepository implements \Netzexpert\Offer\Api\OfferItemRepositoryIn
      */
     public function getById($id)
     {
-        /** @var \Netzexpert\Offer\Model\OfferItem $offer */
+        /** @var \Cartshare\Offer\Model\OfferItem $offer */
         $offer = $this->offerItemFactory->create();
         $offer->load($id, 'quote_item_id');
         if (!$offer->getId()) {

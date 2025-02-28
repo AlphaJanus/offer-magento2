@@ -100,7 +100,7 @@
                 </item>
             </argument>
         </column>
-        <actionsColumn name="actions" class="Netzexpert\Offer\Ui\Component\Listing\Column\SavedOffersActions">
+        <actionsColumn name="actions" class="Cartshare\Offer\Ui\Component\Listing\Column\SavedOffersActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="indexField" xsi:type="string">entity_id</item>

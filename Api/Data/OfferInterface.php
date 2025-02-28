@@ -6,7 +6,7 @@
  * Time: 11:59
  */
 
-namespace Netzexpert\Offer\Api\Data;
+namespace Cartshare\Offer\Api\Data;
 
 interface OfferInterface
 {
@@ -27,7 +27,7 @@ interface OfferInterface
     /**
      * Set id
      * @param $entityId
-     * @return \Netzexpert\Offer\Api\Data\OfferInterface
+     * @return \Cartshare\Offer\Api\Data\OfferInterface
      */
     public function setId($entityId);
 
@@ -40,7 +40,7 @@ interface OfferInterface
     /**
      * Set Quote ID
      * @param $quoteId
-     * @return \Netzexpert\Offer\Api\Data\OfferInterface
+     * @return \Cartshare\Offer\Api\Data\OfferInterface
      */
     public function setQuoteId($quoteId);
 
@@ -53,7 +53,7 @@ interface OfferInterface
     /**
      * Set Email
      * @param $email
-     * @return \Netzexpert\Offer\Api\Data\OfferInterface
+     * @return \Cartshare\Offer\Api\Data\OfferInterface
      */
     public function setEmail($email);
 
@@ -66,7 +66,7 @@ interface OfferInterface
     /**
      * Set Customer Id
      * @param $customerId
-     * @return \Netzexpert\Offer\Api\Data\OfferInterface
+     * @return \Cartshare\Offer\Api\Data\OfferInterface
      */
     public function setCustomerId($customerId);
 }

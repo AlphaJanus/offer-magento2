@@ -3,15 +3,15 @@
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="quote_grid_listing_data_source" xsi:type="string">Netzexpert\Offer\Model\ResourceModel\Grid\Collection</item>
+                <item name="quote_grid_listing_data_source" xsi:type="string">Cartshare\Offer\Model\ResourceModel\Grid\Collection</item>
             </argument>
         </arguments>
     </type>
-    <preference for="Netzexpert\Offer\Api\Data\OfferInterface" type="Netzexpert\Offer\Model\Offer" />
-    <preference for="Netzexpert\Offer\Api\Data\OfferItemInterface" type="Netzexpert\Offer\Model\OfferItem" />
+    <preference for="Cartshare\Offer\Api\Data\OfferInterface" type="Cartshare\Offer\Model\Offer" />
+    <preference for="Cartshare\Offer\Api\Data\OfferItemInterface" type="Cartshare\Offer\Model\OfferItem" />
     <type name="\Magento\Checkout\Controller\Cart\Configure">
         <plugin name="check_request_param"
-                type="\Netzexpert\Offer\Plugin\Cart\ConfigurePlugin"
+                type="\Cartshare\Offer\Plugin\Cart\ConfigurePlugin"
                 sortOrder="1" />
     </type>
 </config>

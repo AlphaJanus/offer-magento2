@@ -6,7 +6,7 @@
  * Time: 17:04
  */
 
-namespace Netzexpert\Offer\Plugin\Cart;
+namespace Cartshare\Offer\Plugin\Cart;
 
 use Psr\Log\LoggerInterface;
 
@@ -23,7 +23,7 @@ class ConfigurePlugin
     private $quoteRepository;
 
     /**
-     * @var \Netzexpert\Offer\Model\OfferItemRepository
+     * @var \Cartshare\Offer\Model\OfferItemRepository
      */
     private $offerItemRepository;
 
@@ -33,7 +33,7 @@ class ConfigurePlugin
     private $session;
 
     /**
-     * @var \Netzexpert\Offer\Model\OfferRepository
+     * @var \Cartshare\Offer\Model\OfferRepository
      */
     private $offerRepository;
 
@@ -44,10 +44,10 @@ class ConfigurePlugin
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
-        \Netzexpert\Offer\Model\OfferItemRepository $offerItemRepository,
+        \Cartshare\Offer\Model\OfferItemRepository $offerItemRepository,
         LoggerInterface $logger,
         \Magento\Checkout\Model\Session $session,
-        \Netzexpert\Offer\Model\OfferRepository $offerRepository
+        \Cartshare\Offer\Model\OfferRepository $offerRepository
     ) {
         $this->request = $request;
         $this->quoteRepository = $quoteRepository;
