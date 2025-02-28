@@ -1,5 +1,5 @@
 {
-    "name": "netzexpert/module-offer",
+    "name": "offers/module-offer",
     "description": "N/A",
     "require": {
         "php": ">=7.4",
