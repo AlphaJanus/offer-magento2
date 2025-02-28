@@ -1,5 +1,5 @@
 {
-    "name": "offers/module-offer",
+    "name": "cartshare/module-offer",
     "description": "N/A",
     "require": {
         "php": ">=7.4",
